@@ -10,17 +10,18 @@
     return function () {
       var context = inContext || this;
       var current = Date.now() || +new Date();
+      var args = arguments;
 
       if (last && current < last + threshhold) {
         // hold on to it
         clearTimeout(deferTimer);
         deferTimer = setTimeout(function () {
           last = current;
-          inCallback.apply(context, arguments);
+          inCallback.apply(context, args);
         }, threshhold);
       } else {
         last = current;
-        inCallback.apply(context, arguments);
+        inCallback.apply(context, args);
       }
     };
   };
