@@ -5,11 +5,12 @@
 
   nx.throttle = function (inCallback, inDelay, inContext) {
     var threshhold = inDelay || 200;
-    var last, deferTimer;
+    var last,
+      deferTimer;
 
     return function () {
       var context = inContext || this;
-      var current = Date.now() || +new Date();
+      var current = Date.now() || + new Date();
       var args = arguments;
 
       if (last && current < last + threshhold) {
@@ -25,7 +26,6 @@
       }
     };
   };
-
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = nx.throttle;
