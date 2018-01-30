@@ -5,22 +5,22 @@
 
   nx.throttle = function (inCallback, inDelay, inContext) {
     var threshhold = inDelay || 200;
-    var last,
-        deferTimer;
+    var last, deferTimer;
+
     return function () {
       var context = inContext || this;
-      var now = Date.now() || +new Date(),
-          args = arguments;
-      if (last && now < last + threshhold) {
+      var current = Date.now() || +new Date();
+
+      if (last && current < last + threshhold) {
         // hold on to it
         clearTimeout(deferTimer);
         deferTimer = setTimeout(function () {
-          last = now;
-          inCallback.apply(context, args);
+          last = current;
+          inCallback.apply(context, arguments);
         }, threshhold);
       } else {
-        last = now;
-        inCallback.apply(context, args);
+        last = current;
+        inCallback.apply(context, arguments);
       }
     };
   };
